@@ -1,0 +1,249 @@
+/*
+ * This file is part of Manual Industries.
+ * Manual Industries is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 2.
+ * Manual Industries is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with Manual Industries. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+grf {
+	grfid: "frMI";
+	name: string(STR_GRF_NAME);
+	desc: string(STR_GRF_DESCRIPTION);
+	version: 2;
+	min_compatible_version: 0;
+
+	param {
+		param_primary_creation {
+			type: int;
+			name: string(STR_PARAM_PRIMARY_CREATION);
+			desc: string(STR_PARAM_CREATION_DESC);
+			min_value: 0;
+			max_value: 2;
+			names: {
+				0: string(STR_PARAM_CREATION_START);
+				1: string(STR_PARAM_CREATION_MANUAL);
+				2: string(STR_PARAM_CREATION_NORMAL);
+			};
+		}
+	}
+	param {
+		param_secondary_creation {
+			type: int;
+			name: string(STR_PARAM_SECONDARY_CREATION);
+			desc: string(STR_PARAM_CREATION_DESC);
+			min_value: 0;
+			max_value: 2;
+			names: {
+				0: string(STR_PARAM_CREATION_START);
+				1: string(STR_PARAM_CREATION_MANUAL);
+				2: string(STR_PARAM_CREATION_NORMAL);
+			};
+		}
+	}
+	param {
+		param_black_creation {
+			type: int;
+			name: string(STR_PARAM_BLACK_CREATION);
+			desc: string(STR_PARAM_BLACK_DESC);
+			min_value: 0;
+			max_value: 2;
+			names: {
+				0: string(STR_PARAM_CREATION_START);
+				1: string(STR_PARAM_CREATION_MANUAL);
+				2: string(STR_PARAM_CREATION_NORMAL);
+			};
+		}
+	}
+	param {
+		param_primary_changes {
+			type: int;
+			name: string(STR_PARAM_PRIMARY_CHANGES);
+			min_value: 0;
+			max_value: 2;
+			names: {
+				0: string(STR_PARAM_PRIMARY_CHANGES_NONE);
+				1: string(STR_PARAM_PRIMARY_CHANGES_NORMAL);
+				2: string(STR_PARAM_PRIMARY_CHANGES_OILWELL);
+			};
+		}
+	}
+	param {
+		param_secondary_changes {
+			type: bool;
+			name: string(STR_PARAM_SECONDARY_CHANGES);
+		}
+	}
+	param {
+		param_primary_cost {
+			type: bool;
+			name: string(STR_PARAM_PRIMARY_COST);
+		}
+	}
+	param {
+		param_secondary_cost {
+			type: bool;
+			name: string(STR_PARAM_SECONDARY_COST);
+		}
+	}
+	param {
+		param_black_cost {
+			type: bool;
+			name: string(STR_PARAM_BLACK_COST);
+		}
+	}
+	param {
+		param_climate_creation {
+			type: bool;
+			name: string(STR_PARAM_CLIMATE_CREATION);
+			desc: string(STR_PARAM_CLIMATE_CREATION_DESC);
+			def_value: 1;
+			bit: 0;
+		}
+		param_town_placement {
+			type: bool;
+			name: string(STR_PARAM_TOWN_PLACEMENT);
+			desc: string(STR_PARAM_TOWN_PLACEMENT_DESC);
+			bit: 1;
+		}
+		param_oilwell_date {
+			type: bool;
+			name: string(STR_PARAM_OILWELL_DATE);
+			bit: 2;
+		}
+		param_oilrig_date {
+			type: bool;
+			name: string(STR_PARAM_OILRIG_DATE);
+			bit: 3;
+		}
+	}
+}
+
+#define DEF_PRIMARY(name, id, special, class) \
+	item(FEAT_INDUSTRIES, name, id) { \
+		property { \
+			substitute: id; \
+			override: id; \
+			prod_flags: param_primary_changes != 0 ? class : PRODUCTIONTYPE_NONE; \
+			spec_flags: special; \
+			remove_cost_multiplier: 0; \
+		} \
+		if (param_primary_creation == 1) { \
+			property { \
+				prob_random: 0; \
+			} \
+		} \
+		if (param_primary_creation != 2) { \
+			property { \
+				prob_in_game: 0; \
+			} \
+		} \
+		if (!param_primary_cost) { \
+			property { \
+				fund_cost_multiplier: 0; \
+			} \
+		} \
+	}
+
+#define DEF_SECONDARY(name, id, special) \
+	item(FEAT_INDUSTRIES, name, id) { \
+		property { \
+			substitute: id; \
+			override: id; \
+			prod_flags: param_secondary_changes ? PRODUCTIONTYPE_PROCESSING : PRODUCTIONTYPE_NONE; \
+			spec_flags: special; \
+			remove_cost_multiplier: 0; \
+		} \
+		if (param_secondary_creation == 1) { \
+			property { \
+				prob_random: 0; \
+			} \
+		} \
+		if (param_secondary_creation != 2) { \
+			property { \
+				prob_in_game: 0; \
+			} \
+		} \
+		if (!param_secondary_cost) { \
+			property { \
+				fund_cost_multiplier: 0; \
+			} \
+		} \
+	}
+
+#define DEF_BLACK(name, id, special) \
+	item(FEAT_INDUSTRIES, name, id) { \
+		property { \
+			substitute: id; \
+			override: id; \
+			spec_flags: special; \
+			remove_cost_multiplier: 0; \
+		} \
+		if (param_black_creation == 1) { \
+			property { \
+				prob_random: 0; \
+			} \
+		} \
+		if (param_black_creation != 2) { \
+			property { \
+				prob_in_game: 0; \
+			} \
+		} \
+		if (!param_black_cost) { \
+			property { \
+				fund_cost_multiplier: 0; \
+			} \
+		} \
+	}
+
+if (climate == CLIMATE_TEMPERATE || !param_climate_creation) {
+	DEF_SECONDARY(Sawmill,       0x02, 0x0000)
+	DEF_PRIMARY  (Oilrig,        0x05, 0x0404 | (param_oilrig_date ? 0x200 : 0), PRODUCTIONTYPE_EXTRACTIVE)
+	DEF_SECONDARY(FactoryTemp,   0x06, 0x1000)
+	DEF_SECONDARY(Steelmill,     0x08, 0x0000)
+	DEF_BLACK    (BankTemp,      0x0C, param_town_placement ? 0x8 : 0x20)
+	DEF_PRIMARY  (Ironmine,      0x12, 0x0000, PRODUCTIONTYPE_EXTRACTIVE)
+}
+if (climate == CLIMATE_TEMPERATE || climate == CLIMATE_ARCTIC || !param_climate_creation) {
+	DEF_PRIMARY  (Coalmine,      0x00, 0x2000, PRODUCTIONTYPE_EXTRACTIVE)
+	DEF_BLACK    (Powerstation,  0x01, 0x0000)
+	DEF_PRIMARY  (Forest,        0x03, 0x0000, PRODUCTIONTYPE_ORGANIC)
+	DEF_PRIMARY  (Farm,          0x09, 0x0041, PRODUCTIONTYPE_ORGANIC)
+}
+if (climate == CLIMATE_ARCTIC || !param_climate_creation) {
+	DEF_SECONDARY(Printingworks, 0x07, 0x0000)
+	DEF_SECONDARY(Papermill,     0x0E, 0x0000)
+	DEF_PRIMARY  (Goldmine,      0x0F, 0x0000, PRODUCTIONTYPE_EXTRACTIVE)
+}
+if (climate == CLIMATE_ARCTIC || climate == CLIMATE_TROPIC || !param_climate_creation) {
+	DEF_SECONDARY(Foodplant,     0x0D, 0x0000)
+	DEF_BLACK    (BankSub,       0x10, param_town_placement ? 0x10 : 0x20)
+}
+if (climate == CLIMATE_TROPIC || !param_climate_creation) {
+	DEF_PRIMARY  (Coppermine,    0x0A, 0x0000, PRODUCTIONTYPE_EXTRACTIVE)
+	DEF_PRIMARY  (Diamondmine,   0x11, 0x0000, PRODUCTIONTYPE_EXTRACTIVE)
+	DEF_PRIMARY  (Fruitplant,    0x13, 0x0000, PRODUCTIONTYPE_ORGANIC)
+	DEF_PRIMARY  (Rubberplant,   0x14, 0x0000, PRODUCTIONTYPE_ORGANIC)
+	DEF_PRIMARY  (Watersupply,   0x15, 0x0000, PRODUCTIONTYPE_EXTRACTIVE)
+	DEF_BLACK    (Watertower,    0x16, param_town_placement ? 0x10 : 0x20)
+	DEF_SECONDARY(FactoryTrop,   0x17, 0x0000)
+	DEF_PRIMARY  (FarmTrop,      0x18, 0x0041, PRODUCTIONTYPE_ORGANIC)
+	DEF_SECONDARY(Lumbermill,    0x19, 0x0002)
+}
+if (climate != CLIMATE_TOYLAND || !param_climate_creation) {
+	DEF_SECONDARY(Oilrefinery,   0x04, 0x0800)
+	DEF_PRIMARY  (Oilwells,      0x0B, (param_oilwell_date ? 0x100 : 0) | (param_primary_changes == 1 ? 0x80 : 0), PRODUCTIONTYPE_EXTRACTIVE)
+}
+if (climate == CLIMATE_TOYLAND || !param_climate_creation) {
+	DEF_PRIMARY  (Candyforest,   0x1A, 0x0000, PRODUCTIONTYPE_ORGANIC)
+	DEF_SECONDARY(Sweetfactory,  0x1B, 0x0000)
+	DEF_PRIMARY  (Batteryfarm,   0x1C, 0x0000, PRODUCTIONTYPE_ORGANIC)
+	DEF_PRIMARY  (Colawells,     0x1D, 0x0000, PRODUCTIONTYPE_EXTRACTIVE)
+	DEF_BLACK    (Toyshop,       0x1E, 0x0020)
+	DEF_SECONDARY(Toyfactory,    0x1F, 0x0000)
+	DEF_PRIMARY  (Plasticfount,  0x20, 0x0000, PRODUCTIONTYPE_EXTRACTIVE)
+	DEF_SECONDARY(Fizzyfactory,  0x21, 0x0000)
+	DEF_PRIMARY  (Bubblegen,     0x22, 0x0000, PRODUCTIONTYPE_ORGANIC)
+	DEF_PRIMARY  (Toffeequarry,  0x23, 0x0000, PRODUCTIONTYPE_EXTRACTIVE)
+	DEF_PRIMARY  (Sugarmine,     0x24, 0x0000, PRODUCTIONTYPE_EXTRACTIVE)
+}
+

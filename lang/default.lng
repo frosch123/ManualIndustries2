@@ -1,0 +1,31 @@
+lang: 7F
+STR_GRF_NAME                                                    :Manual Industries II
+STR_GRF_DESCRIPTION                                             :Allows disabling certain aspects of default industries including disabling all economical aspects like opening/closure and production changes.{}Using cheats one can then control industries manually without any random changes interfering.{}{ORANGE}Not compatible with other industry sets.{}{BLACK}Coded by frosch. License: GPL 2.0{}Btw.: {ORANGE}NML is great!
+
+STR_PARAM_PRIMARY_CREATION                                      :Random construction of raw industries
+STR_PARAM_SECONDARY_CREATION                                    :Random construction of processing industries
+STR_PARAM_BLACK_CREATION                                        :Random construction of other industries
+STR_PARAM_CREATION_DESC                                         :Allow/disallow random construction of industries during game or on map creation.
+STR_PARAM_BLACK_DESC                                            :Powerplants, banks, ...
+STR_PARAM_CREATION_START                                        :Only on map creation
+STR_PARAM_CREATION_MANUAL                                       :Off
+STR_PARAM_CREATION_NORMAL                                       :On
+
+STR_PARAM_PRIMARY_CHANGES                                       :Productionchanges/closure of raw industries
+STR_PARAM_PRIMARY_CHANGES_NONE                                  :None
+STR_PARAM_PRIMARY_CHANGES_NORMAL                                :Normal
+STR_PARAM_PRIMARY_CHANGES_OILWELL                               :Normal, but oilwells can also increase production
+STR_PARAM_SECONDARY_CHANGES                                     :Closure of secondary industries
+
+STR_PARAM_PRIMARY_COST                                          :Construction costs for raw industries
+STR_PARAM_SECONDARY_COST                                        :Construction costs for processing industries
+STR_PARAM_BLACK_COST                                            :Construction costs for other industries
+
+STR_PARAM_CLIMATE_CREATION                                      :Climate restrictions
+STR_PARAM_CLIMATE_CREATION_DESC                                 :Disabling this allows construction of industries from other climates. They will not appear randomly on their own. And they will also produce wrong cargos. So, not really useful :p
+
+STR_PARAM_TOWN_PLACEMENT                                        :Townsize restrictions
+STR_PARAM_TOWN_PLACEMENT_DESC                                   :Lower restrictions for banks and water tower
+
+STR_PARAM_OILWELL_DATE                                          :Random construction of oilwells only before 1950
+STR_PARAM_OILRIG_DATE                                           :Random construction of oilrigs only after 1960
