@@ -1,0 +1,44 @@
+# Use glob syntax:
+syntax: glob
+
+# The local makefile should be ignored:
+Makefile.local
+custom_tags.txt
+
+# And the description file and the grs which are generated automatically
+# This has to be adopted to the newgrf filename
+*.grf
+
+# Ignore intermediate files created by the Makefile:
+*.nml
+docs/readme.txt
+
+# Dependency files:
+Makefile.dep
+*.src.dep
+*.gfx.dep
+*.cnfo
+*.REV
+*.md5
+
+# Ignore directories from bundle creation / install:
+# Has to be adjusted to the newgrf-name
+mynewgrf-*
+
+#The .renum dir
+.nforenum
+
+#Some NML file
+parsetab.py
+
+# Ignore frequent development left-overs like
+# editor backups, patches, rejects etc. pp
+**.orig
+**.bak
+**.log
+**.rej
+**.diff
+
+# Files created by Mac image preview and file browser:
+**/.DS_Store
+**/Thumbs.db
