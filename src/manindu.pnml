@@ -9,7 +9,7 @@ grf {
 	grfid: "frMI";
 	name: string(STR_GRF_NAME);
 	desc: string(STR_GRF_DESCRIPTION);
-	version: 2;
+	version: REPO_REVISION;
 	min_compatible_version: 0;
 
 	param {
