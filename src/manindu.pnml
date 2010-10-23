@@ -89,6 +89,7 @@ grf {
 		param_black_cost {
 			type: bool;
 			name: string(STR_PARAM_BLACK_COST);
+			desc: string(STR_PARAM_BLACK_DESC);
 		}
 	}
 	param {
