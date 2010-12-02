@@ -1,4 +1,5 @@
-lang: 7F
+##grflangid 0x01
+
 STR_GRF_NAME                                                    :Manual Industries II ({VERSION})
 STR_GRF_DESCRIPTION                                             :Allows disabling certain aspects of default industries including disabling all economical events like opening/closure and production changes.{}Using cheats one can then control industries manually without any random changes interfering.{}{ORANGE}Not compatible with other industry sets.{}{BLACK}Coded by frosch. License: GPL 2.0{}Btw.: {ORANGE}NML is great!
 
